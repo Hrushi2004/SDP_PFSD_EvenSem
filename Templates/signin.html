@@ -1,0 +1,98 @@
+{% load static %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+  body {
+    background-color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start; /* Align the container to the left */
+    align-items: center;
+    height: 100vh;
+    width: 50%; /* Take up 50% of the viewport width */
+    margin-left: 100px;
+}
+
+.signin-form {
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+    color: #fff;
+}
+
+.signin-form form {
+    display: inline-block;
+}
+
+.signin-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.signin-form input[type="text"],
+.signin-form input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.signin-form button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.signin-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.signup-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 55%; /* Take up 50% of the viewport width */
+    object-fit: cover; /* Ensure the image covers the entire container */
+    margin-right: 10px;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+</style>
+
+<div class="container">
+  <a href="javascript:history.go(-1)" class="back-button"><i class="fas fa-arrow-left"></i></a>
+  <div class="signin-form">
+    <form method="post" action="{% url 'signin_view' %}">
+      {% csrf_token %}
+      <label for="signin-username">Username:</label>
+      <input type="text" id="signin-username" name="signin-username" required>
+
+      <label for="signin-password">Password:</label>
+      <input type="password" id="signin-password" name="signin-password" required>
+
+      <button type="submit">Submit</button>
+    </form>
+    {% if error_message %}
+      <p>{{ error_message }}</p>
+    {% endif %}
+         <p>New user? <a href="http://127.0.0.1:8000/#signup">Register here</a></p>
+  </div>
+</div>
+<img src="{% static 'img/img.png' %}" alt="Signup Image" class="signup-image">

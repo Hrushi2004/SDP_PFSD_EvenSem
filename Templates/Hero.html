@@ -12,17 +12,19 @@
         const signupForm = document.querySelector('.signup-form');
         const signinForm = document.querySelector('.signin-form');
 
-         signupForm.style.display = 'none';
-        signinForm.style.display = 'block';
+         signupForm.style.display = 'block';
+        signinForm.style.display = 'none';
 
         signupBtn.addEventListener('click', function () {
             signupForm.style.display = 'block';
             signinForm.style.display = 'none';
+
         });
 
         signinBtn.addEventListener('click', function () {
             signinForm.style.display = 'block';
             signupForm.style.display = 'none';
+
         });
  function scrollToNextSection() {
             const aboutUsSection = document.getElementById('about-us'); // Change this ID to the target section
@@ -280,8 +282,8 @@ button:active {
         <h1>Blog</h1>
         <div class="Buttons">
 
-            <button onclick="window.location.href='#signup'">
-                  <span>Sign Up</span>
+            <button onclick="window.location.href='/signin'">
+                  <span>Sign In</span>
             </button>
              <button onclick="window.location.href='#about-us'">
                   <span>About Us</span>

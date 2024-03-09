@@ -1,7 +1,14 @@
+# Assuming your Django app is named 'blog'
+
+# In your models.py file
+
 from django.db import models
 
 
-class User(models.Model):
+class UserProfile(models.Model):
     username = models.CharField(max_length=100)
-    email = models.EmailField()
-    password = models.CharField(max_length=100)  # In practice, use a more secure way to store passwords
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.username
