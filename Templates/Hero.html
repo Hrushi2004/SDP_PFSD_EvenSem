@@ -303,50 +303,14 @@ button:active {
 </div>
 
 <div class="container about-us" id="about-us">
-    <h1>About Us</h1>
-    <p>Learn more about what we do and our mission.</p>
-    <!-- Additional content for About Us container -->
-
+   {% include 'aboutus.html' %}
 </div>
 
 <div class="container signup" id="signup">
-    <div class="form">
-
-        <button id="signup-btn" class="cta-button">Sign Up</button>
-        <button id="signin-btn" class="cta-button active">Sign In</button>
-        <div class="signup-form">
-            <form>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-
-        <div class="signin-form">
-            <form>
-                <label for="signin-username">Username:</label>
-                <input type="text" id="signin-username" name="signin-username" required>
-
-                <label for="signin-password">Password:</label>
-                <input type="password" id="signin-password" name="signin-password" required>
-
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-    </div>
-    <img src="{% static 'img/img.png' %}" alt="Signup Image" class="signup-image">
+    {% include 'signup.html' %}
 </div>
 
 <div class="container team" id="team">
-    <h1>Our Team</h1>
-    <p>Meet the talented individuals behind our success.</p>
-    <!-- Additional content for Our Team container -->
+   {% include 'ourteam.html' %}
 </div>
 {% endblock %}

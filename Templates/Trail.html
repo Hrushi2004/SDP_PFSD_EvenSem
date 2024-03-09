@@ -6,6 +6,99 @@
   <title>Button Examples</title>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <style>
+  .blog-container {
+        max-width: 600px; /* Adjust the maximum width as needed */
+        margin: 20px auto;
+        border: 1px solid #ddd; /* Border color */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+        padding: 20px;
+        border-radius: 8px;
+        position: relative;
+    }
+
+    /* Rest of your existing styles */
+    .blog-post {
+        /* Your existing styles for the blog post */
+    }
+
+    .blog-header {
+        /* Your existing styles for the blog header */
+    }
+
+    .blog-meta {
+        /* Your existing styles for the blog meta */
+    }
+
+    .options {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    .options-menu {
+        display: none;
+        position: absolute;
+        top: 30px;
+        right: 0;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        border-radius: 20px;
+        padding: 5px 0;
+        z-index: 1;
+    }
+
+    .options-menu li {
+        list-style: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .options-menu li:hover {
+        background-color: #f0f0f0;
+    }
+
+    .report-option {
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .report-option:hover {
+        background-color: #f0f0f0;
+    }
+    .blog-title {
+        /* Your existing styles for the blog title */
+    }
+
+    .blog-content {
+        /* Your existing styles for the blog content */
+    }
+
+   .blog-feedback {
+        /* Your existing styles for the blog feedback */
+        margin-top: 10px;
+    }
+     .like-btn,
+    .dislike-btn {
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .like-btn:hover,
+    .dislike-btn:hover {
+        color: #ff6347; /* Change to your preferred hover color */
+    }
+
+    .like-btn.clicked,
+    .dislike-btn.clicked {
+        color: #008000; /* Change to your preferred clicked color */
+    }
+
+    .btn-space {
+        margin-right: 10px;
+    }
     body {
       display: flex;
       justify-content: center;
@@ -135,5 +228,58 @@ button:active {
   <span>Instagram</span>
 </button>
 
+     <div class="blog-container">
+        <div class="blog-post">
+            <div class="blog-header">
+                <div class="blog-meta">
+                    <span>@AuthorName</span>
+                    <div class="options" onclick="toggleOptionsMenu()">
+                        <i class="fas fa-ellipsis-h"></i>
+                        <ul class="options-menu" id="optionsMenu">
+                            <li onclick="reportPost()">Report</li>
+                        </ul>
+                    </div>
+                </div>
+                <h1 class="blog-title">Blog Title</h1>
+            </div>
+            <div class="blog-content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit aliquet lacinia. Duis volutpat tempus neque, ac tristique velit sollicitudin et.</p>
+            </div>
+            <div class="blog-feedback">
+                <i class="far fa-thumbs-up like-btn btn-space" onclick="toggleButtonColor(this)"></i>
+                <i class="far fa-thumbs-down dislike-btn" onclick="toggleButtonColor(this)"></i>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function toggleOptionsMenu(event) {
+        var optionsMenu = document.getElementById("optionsMenu");
+        if (optionsMenu.style.display === "block") {
+            optionsMenu.style.display = "none";
+        } else {
+            optionsMenu.style.display = "block";
+        }
+        event.stopPropagation(); // Prevents the click event from bubbling up to the document
+    }
+
+    function reportPost(event) {
+        // Add your code to handle reporting the post
+        alert("Post reported!");
+        event.stopPropagation(); // Prevents the click event from bubbling up to the document
+    }
+
+    // Close options menu when clicking anywhere else on the page
+    document.addEventListener("click", function(event) {
+        var optionsMenu = document.getElementById("optionsMenu");
+        if (event.target.closest(".options") === null && optionsMenu.style.display === "block") {
+            optionsMenu.style.display = "none";
+        }
+    });
+
+    function toggleButtonColor(button) {
+        button.classList.toggle("clicked");
+    }
+</script>
 </body>
 </html>
