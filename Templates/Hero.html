@@ -33,6 +33,22 @@
         const downArrow = document.getElementById('down-arrow');
         downArrow.addEventListener('click', scrollToNextSection);
     });
+    document.addEventListener("DOMContentLoaded", function() {
+  const buttons = document.querySelectorAll('.cta-button');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Remove active class from all buttons
+      buttons.forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Add active class to the clicked button
+      this.classList.add('active');
+    });
+  });
+});
+
 </script>
 <style>
 /* Add this to your existing styles */
@@ -142,16 +158,27 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+   margin-left: 120px;
 }
 
 /* Position buttons */
-#signup-btn,
-#signin-btn {
-
+#signin-btn,
+ #signup-btn
+ {
     position: absolute;
     top: 0;
-    background-color: white;
+    background-color: black; /* Initial background color */
+    color: white; /* Initial text color */
+    border: 1px solid white; /* White border */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* Transition effect for color change */
+    outline: none;
 }
+
+
+
 
 #signup-btn {
     top: -100px;
@@ -164,7 +191,8 @@
 
 #signup-btn.active,
 #signin-btn.active {
-    background-color: rgb(150, 130, 255);
+    background-color: white;
+    color: black;
 }
 
 .signup-image {
@@ -283,9 +311,9 @@ button:active {
 
 <div class="container signup" id="signup">
     <div class="form">
-        <h1>Sign Up</h1>
+
         <button id="signup-btn" class="cta-button">Sign Up</button>
-        <button id="signin-btn" class="cta-button">Sign In</button>
+        <button id="signin-btn" class="cta-button active">Sign In</button>
         <div class="signup-form">
             <form>
                 <label for="username">Username:</label>
