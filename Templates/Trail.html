@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Examples</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+<style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .navButton {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgb(20, 20, 20);
+      border: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0px 0px 0px 4px rgba(180, 160, 255, 0.253);
+      cursor: pointer;
+      transition-duration: 0.3s;
+      overflow: hidden;
+      position: relative;
+      color: white;
+      text-decoration: none;
+      margin: 10px;
+    }
+
+    .navButton i {
+      font-size: 20px;
+      transition-duration: 0.3s;
+      colour: white;
+    }
+
+    .navButton:hover {
+      width: 140px;
+      border-radius: 50px;
+      transition-duration: 0.3s;
+      background-color: rgb(181, 160, 255);
+      align-items: center;
+    }
+
+    .navButton:hover i {
+      transition-duration: 0.3s;
+      transform: translateY(-200%);
+    }
+
+    .navButton::before {
+      position: absolute;
+      bottom: -20px;
+      content: attr(data-text); /* Use data-text attribute for dynamic text */
+      font-size: 0px;
+    }
+
+    .navButton:hover::before {
+      font-size: 13px;
+      opacity: 1;
+      bottom: unset;
+      transition-duration: 0.3s;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#" class="navButton" data-text="Settings">
+    <i class="fas fa-cogs"></i>
+  </a>
+
+  <a href="#" class="navButton" data-text="Home">
+    <i class="fas fa-home"></i>
+  </a>
+
+  <a href="#" class="navButton" data-text="Profile">
+    <i class="fas fa-user"></i>
+  </a>
+
+</body>
+</html>

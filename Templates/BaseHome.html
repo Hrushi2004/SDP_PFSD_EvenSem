@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+
+    <!-- Include Font Awesome CSS (you may need to adjust the version) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <style>
+        body {
+    position: relative;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(45deg, rgb(20, 20, 20) 75.2%, darkgreen 24.8%);
+    z-index: -1;
+}
+
+/* Rest of your existing styles remain unchanged */
+
+
+        header {
+            background: linear-gradient(45deg, rgb(20, 20, 20) 64.1%, darkgreen 36%);
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+
+            z-index: 1;
+        }
+
+        .title {
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .search-bar {
+            position: relative;
+            margin-right: 20px;
+            max-width: 5000px;
+        }
+
+        .search-bar input {
+            background-color: black;
+            border-radius: 20px;
+            border: 2px solid ghostwhite;
+            color: white;
+            padding: 13px;
+            padding-right: 40px; /* Adjusted padding for the icon */
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: black;
+            border-radius: 20px;
+
+            color: white;
+            padding: 8px;
+        }
+
+        .search-bar button i {
+            font-size: 16px;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .icons-container {
+            position: fixed;
+            left: 20px;
+            top: 45%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 2;
+        }
+
+        .blog-container {
+            margin-top: 1600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .blog-post {
+            background-color: black;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease-in-out;
+            width: 90%;
+            max-width: 800px;
+            border: 2px solid white;
+        }
+
+        .blog-post:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            transform: scale(1.02);
+        }
+
+        .navButton {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgb(20, 20, 20);
+            border: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 0px 0px 4px rgba(180, 160, 255, 0.253);
+            cursor: pointer;
+            transition-duration: 0.3s;
+            overflow: hidden;
+            color: white;
+            text-decoration: none;
+            margin: 10px;
+        }
+
+        .navButton i {
+            font-size: 20px;
+            transition-duration: 0.3s;
+            color: white;
+        }
+
+        .navButton:hover {
+            width: 140px;
+            border-radius: 50px;
+            transition-duration: 0.3s;
+            background-color: darkgreen;
+            align-items: center;
+        }
+
+        .navButton:hover i {
+            transition-duration: 0.3s;
+            transform: translateY(-200%);
+        }
+
+        .navButton::before {
+            position: absolute;
+            bottom: -20px;
+            content: attr(data-text);
+            font-size: 0px;
+        }
+
+        .navButton:hover::before {
+            font-size: 13px;
+            opacity: 1;
+            bottom: unset;
+            transition-duration: 0.3s;
+        }
+
+        .icons {
+            position: absolute;
+            left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title">
+            <h1>{% block header %}My Website Header{% endblock %}</h1>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </div>
+    </header>
+
+    <main>
+        <div class="icons-container">
+            <a href="#" class="navButton" data-text="Home">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="#" class="navButton" data-text="Popular This Week">
+                <i class="fas fa-fire"></i>
+            </a>
+              <a href="#" class="navButton" data-text="Favorite">
+                <i class="fas fa-bookmark"></i>
+            </a>
+            <a href="#" class="navButton" data-text="Profile">
+                <i class="fas fa-user"></i>
+            </a>
+            <a href="#" class="navButton" data-text="Settings">
+                <i class="fas fa-cogs"></i>
+            </a>
+
+        </div>
+
+        <div class="blog-container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+</body>
+</html>

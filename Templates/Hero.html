@@ -1,0 +1,269 @@
+<!-- hero_page.html -->
+{% extends 'BaseHero.html' %}
+
+{% load static %}
+{% block title %}Hero Page - My Website{% endblock %}
+
+{% block content %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const signupBtn = document.getElementById('signup-btn');
+        const signinBtn = document.getElementById('signin-btn');
+        const signupForm = document.querySelector('.signup-form');
+        const signinForm = document.querySelector('.signin-form');
+
+         signupForm.style.display = 'none';
+        signinForm.style.display = 'block';
+
+        signupBtn.addEventListener('click', function () {
+            signupForm.style.display = 'block';
+            signinForm.style.display = 'none';
+        });
+
+        signinBtn.addEventListener('click', function () {
+            signinForm.style.display = 'block';
+            signupForm.style.display = 'none';
+        });
+ function scrollToNextSection() {
+            const aboutUsSection = document.getElementById('about-us'); // Change this ID to the target section
+            aboutUsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Event listener for arrow click
+        const downArrow = document.getElementById('down-arrow');
+        downArrow.addEventListener('click', scrollToNextSection);
+    });
+</script>
+<style>
+/* Add this to your existing styles */
+#down-arrow-container {
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: bounce 2s infinite; /* Add bounce animation */
+}
+
+#down-arrow {
+    font-size: 30px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+#swipe-text {
+    color: white;
+    font-size: 14px;
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+#main::before {
+      content: "";
+      background-image: url('{% static "img/heropic.jpg" %}');
+      background-size: cover;
+      position: absolute;
+      top: -100px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      opacity: 0.5;
+}
+.container.about-us {
+    background-color: black;
+    color: white; /* Set text color to contrast with the dark background */
+}
+
+.container.team {
+    background-color: black; /* Example background color for Our Team container */
+    color: white;
+}
+
+.container.signup {
+    color: white;
+    position: relative;
+}
+
+.signup-form,
+.signin-form {
+    max-width: 400px;
+    margin: 20px auto;
+    text-align: left;
+    padding: 20px;
+    border: 2px solid darkgreen;
+    border-radius: 10px;
+    position: relative;
+}
+.signup-form::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: darkgreen; /* Your background color */
+    opacity: 0.8; /* Adjust the opacity as needed */
+    z-index: -2;
+}
+.signup-form label,
+.signin-form label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.signup-form input,
+.signin-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.form {
+
+    position: absolute;
+    left: 100px;
+}
+.signup-form button,
+.signin-form button {
+
+    background-color: darkgreen;
+    color: black;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Position buttons */
+#signup-btn,
+#signin-btn {
+
+    position: absolute;
+    top: 0;
+    background-color: darkgreen;
+}
+
+#signup-btn {
+    top: -100px;
+}
+
+#signin-btn {
+    top: -100px;
+    left: 10px;
+}
+
+#signup-btn.active,
+#signin-btn.active {
+    background-color: rgb(150, 130, 255);
+}
+.signup-image {
+    position: absolute;
+    right: 1px;
+    background-blend-mode: darken;
+    height: 775px;
+    width: 900px;
+}
+
+.logo-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    max-width: 100px; /* Adjust the width as needed */
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 1.5em; /* Adjust the font size as needed */
+}
+.Buttons{
+        margin-left: 50px;
+        margin-top: 20px;
+    }
+
+</style>
+<div class="container" id="main">
+
+    <div class="logo-container">
+        <img src="{% static 'Logo/Logo.jpg' %}" alt="Logo" class="logo">
+        <h1>Blog</h1>
+        <div class="Buttons">
+            <a href="#signup" class="nav-button">Sign Up</a>
+            <a href="#about-us" class="nav-button">About Us</a>
+            <a href="#team" class="nav-button">Our Team</a>
+        </div>
+
+    </div>
+
+    <h1 style="font-size: 4em;">Welcome to Blog</h1>
+   <p> Explore, Engage and be Inspired – Where Stories Come to Life!</p>
+<div id="down-arrow-container">
+    <i id="down-arrow" class="fas fa-arrow-down"></i>
+    <p id="swipe-text">Swipe up to learn more</p>
+</div>
+
+</div>
+
+<div class="container about-us" id="about-us">
+    <h1>About Us</h1>
+    <p>Learn more about what we do and our mission.</p>
+    <!-- Additional content for About Us container -->
+
+</div>
+
+<div class="container signup" id="signup">
+    <div class="form">
+        <h1>Sign Up</h1>
+        <button id="signup-btn" class="cta-button">Sign Up</button>
+        <button id="signin-btn" class="cta-button">Sign In</button>
+        <div class="signup-form">
+            <form>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <div class="signin-form">
+            <form>
+                <label for="signin-username">Username:</label>
+                <input type="text" id="signin-username" name="signin-username" required>
+
+                <label for="signin-password">Password:</label>
+                <input type="password" id="signin-password" name="signin-password" required>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <img src="{% static 'img/img.png' %}" alt="Signup Image" class="signup-image">
+</div>
+
+<div class="container team" id="team">
+    <h1>Our Team</h1>
+    <p>Meet the talented individuals behind our success.</p>
+    <!-- Additional content for Our Team container -->
+</div>
+{% endblock %}

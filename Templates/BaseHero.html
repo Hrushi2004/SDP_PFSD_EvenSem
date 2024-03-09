@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+
+    <!-- Include Font Awesome CSS (you may need to adjust the version) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const containers = document.querySelectorAll('.container');
+            let currentContainerIndex = 0;
+            let scrolling = false;
+
+            window.addEventListener('wheel', function (event) {
+                if (scrolling) return;
+
+                scrolling = true;
+
+                if (event.deltaY > 0) {
+                    // Scrolling down
+                    currentContainerIndex = Math.min(currentContainerIndex + 1, containers.length - 1);
+                } else {
+                    // Scrolling up
+                    currentContainerIndex = Math.max(currentContainerIndex - 1, 0);
+                }
+
+                scrollToContainer(containers[currentContainerIndex]);
+            });
+
+            function scrollToContainer(container) {
+                const targetScrollTop = container.offsetTop;
+                const duration = 650; // Adjust the duration as needed
+                const startTime = performance.now();
+                const initialScrollTop = window.scrollY;
+
+                function animateScroll() {
+                    const elapsed = performance.now() - startTime;
+                    const progress = elapsed / duration;
+
+                    if (progress < 1) {
+                        const newScrollTop = initialScrollTop + (targetScrollTop - initialScrollTop) * progress;
+                        window.scrollTo(0, newScrollTop);
+                        requestAnimationFrame(animateScroll);
+                    } else {
+                        window.scrollTo(0, targetScrollTop);
+                        scrolling = false;
+                    }
+                }
+
+                animateScroll();
+            }
+        });
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+
+        .cta-button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background-color: rgb(181, 160, 255);
+            border: none;
+            border-radius: 5px;
+            color: black;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background-color: rgb(150, 130, 255);
+        }
+
+        .nav-button {
+            margin-top: 20px;
+            font-size: 1em;
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>
