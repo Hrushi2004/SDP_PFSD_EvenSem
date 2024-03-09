@@ -99,7 +99,7 @@
     margin: 20px auto;
     text-align: left;
     padding: 20px;
-    border: 2px solid darkgreen;
+    border: 2px solid white;
     border-radius: 10px;
     position: relative;
 }
@@ -110,7 +110,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: darkgreen; /* Your background color */
+    background: white; /* Your background color */
     opacity: 0.8; /* Adjust the opacity as needed */
     z-index: -2;
 }
@@ -136,7 +136,7 @@
 .signup-form button,
 .signin-form button {
 
-    background-color: darkgreen;
+    background-color: white;
     color: black;
     padding: 12px 20px;
     border: none;
@@ -150,7 +150,7 @@
 
     position: absolute;
     top: 0;
-    background-color: darkgreen;
+    background-color: white;
 }
 
 #signup-btn {
@@ -166,6 +166,7 @@
 #signin-btn.active {
     background-color: rgb(150, 130, 255);
 }
+
 .signup-image {
     position: absolute;
     right: 1px;
@@ -192,9 +193,56 @@
     font-size: 1.5em; /* Adjust the font size as needed */
 }
 .Buttons{
-        margin-left: 50px;
-        margin-top: 20px;
-    }
+    margin-left: 25px;
+}
+ button {
+ --glow-color:white;
+ --enhanced-glow-color: white;
+ --btn-color: black;
+ border: .25em solid var(--glow-color);
+ padding: 1em 1em;
+ color: var(--glow-color);
+ font-size: 15px;
+ font-weight: bold;
+ background-color: var(--btn-color);
+ border-radius: 1em;
+ outline: none;
+ box-shadow: 0 0 1em .25em var(--glow-color),
+        0 0 4em 1em var(--glow-spread-color),
+        inset 0 0 .75em .25em var(--glow-color);
+ text-shadow: 0 0 .5em var(--glow-color);
+ position: relative;
+ transition: all 0.3s;
+  margin-left: 25px;
+}
+
+button::after {
+ pointer-events: none;
+ content: "";
+ position: absolute;
+ top: 120%;
+ left: 0;
+ height: 100%;
+ width: 100%;
+ background-color: var(--glow-spread-color);
+ filter: blur(2em);
+ opacity: .7;
+ transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
+}
+
+button:hover {
+ color: var(--btn-color);
+ background-color: var(--glow-color);
+ box-shadow: 0 0 1em .25em var(--glow-color),
+        0 0 4em 2em var(--glow-spread-color),
+        inset 0 0 .75em .25em var(--glow-color);
+}
+
+button:active {
+ box-shadow: 0 0 0.6em .25em var(--glow-color),
+        0 0 2.5em 2em var(--glow-spread-color),
+        inset 0 0 .5em .25em var(--glow-color);
+}
 
 </style>
 <div class="container" id="main">
@@ -203,9 +251,16 @@
         <img src="{% static 'Logo/Logo.jpg' %}" alt="Logo" class="logo">
         <h1>Blog</h1>
         <div class="Buttons">
-            <a href="#signup" class="nav-button">Sign Up</a>
-            <a href="#about-us" class="nav-button">About Us</a>
-            <a href="#team" class="nav-button">Our Team</a>
+
+            <button onclick="window.location.href='#signup'">
+                  <span>Sign Up</span>
+            </button>
+             <button onclick="window.location.href='#about-us'">
+                  <span>About Us</span>
+             </button>
+             <button onclick="window.location.href='#team'">
+                  <span>Our team</span>
+            </button>
         </div>
 
     </div>
