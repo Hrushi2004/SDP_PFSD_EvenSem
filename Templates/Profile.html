@@ -1,9 +1,5 @@
 {% extends 'BaseHome.html' %}
 
-{% block title %}My Blog - My Website{% endblock %}
-
-{% block header %}Welcome to Blog{% endblock %}
-
 {% block content %}
 <script>
     function toggleOptionsMenu(event) {
@@ -49,34 +45,65 @@
         }
 
 
-        // Assuming you have the username available in a variable called 'username'
-        var urlParams = new URLSearchParams(window.location.search);
-    var username = urlParams.get('username');
 
-    function navigateToNewPage() {
-        if (!username) {
-            console.error('Username not found in the URL.');
-            return;
-        }
+   // JavaScript code in your template
 
-        // Construct the URL for the new page with the username as a parameter
-        var url = '/new/' + encodeURIComponent(username);
-
-        // Navigate to the new page
-        window.location.href = url;
+function deletePost(blogId) {
+    if (confirm("Are you sure you want to delete this blog?")) {
+        // Send a POST request to the delete URL
+        fetch(`/delete-post/${blogId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Blog post deleted successfully!");
+                // Reload the page after a successful deletion
+                window.location.reload();
+            } else {
+                alert("Failed to delete blog post.");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred while deleting the blog post.");
+        });
     }
+}
 </script>
 <style>
-    .header{
+    .scroll-container {
+    max-height: 400px; /* Adjust the maximum height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 100px; /* Add padding for better aesthetics */
+}
+
+.blog-post {
+    margin-bottom: 20px; /* Add margin between blog posts */
+}
+       .blog-container {
+
+        max-width: 600px; /* Adjust the maximum width as needed */
+        margin: 20px auto;
+        border: 1px solid #ddd; /* Border color */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+        padding: 20px;
+        border-radius: 8px;
+        position: relative;
+         width: 600px; /* Adjust the width as needed */
+    margin: 20px auto;
+    }
+.header{
     position: fixed;
     left: 250px;
     top: 40px;
 }
 </style>
-
-        <div class="icons-container">
-           <a href="/new/{{username}}" class="navButton" data-text="New post">
-    <i class="fas fa-pencil-alt"></i>
+<div class="icons-container">
+           <a href="/home/{{username}}" class="navButton" data-text="Home">
+    <i class="fas fa-home"></i>
 </a>
             <a href="#" class="navButton" data-text="Popular This Week">
                 <i class="fas fa-fire"></i>
@@ -84,17 +111,19 @@
               <a href="#" class="navButton" data-text="Favorite">
                 <i class="fas fa-bookmark"></i>
             </a>
-            <a href="/profile/{{username}}" class="navButton" data-text="Profile">
-                <i class="fas fa-user"></i>
+            <a href="/new/{{username}}" class="navButton" data-text="New Post">
+                <i class="fas fa-pencil-alt"></i>
             </a>
             <a href="#" class="navButton" data-text="Settings">
                 <i class="fas fa-cogs"></i>
             </a>
 
-        </div>
+ </div>
+
 <div class="header">
-    <h1>Welcome</h1>
+    <h1>Your Blogs</h1>
 </div>
+
 <div id="blog-posts" class="scroll-container">
     {% for blog in blogs %}
     <div class="blog-container">
@@ -106,6 +135,7 @@
                         <i class="fas fa-ellipsis-h"></i>
                         <ul class="options-menu" id="optionsMenu">
                             <li onclick="reportPost()">Report</li>
+                             <li onclick="deletePost({{ blog.id }})">Delete</li> <!-- Add delete option -->
                         </ul>
                     </div>
                 </div>
@@ -122,5 +152,4 @@
     </div>
     {% endfor %}
 </div>
-
 {% endblock %}

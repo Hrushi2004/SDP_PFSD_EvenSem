@@ -1,13 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.http import JsonResponse
-from django.shortcuts import render, redirect
-from .models import UserProfile
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import UserProfile, Blog
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from app.forms import UserForm
+from app.forms import UserForm, UserDataForm, BlogForm
 
 
 # Create your views here.
@@ -15,8 +16,17 @@ def hero(request):
     return render(request, 'Hero.html')
 
 
-def home(request):
-    return render(request, 'Home.html')
+def home(request, username):
+    try:
+        # Assuming the unique identifier is associated with the user's username
+        userid = UserUniqueIdentifier.objects.get(username=username)
+    except UserUniqueIdentifier.DoesNotExist:
+        # Handle case where user is not found
+        return HttpResponse("User not found")
+
+    # Now you have the user's unique identifier, you can use it to fetch related blogs or perform other operations
+    blogs = Blog.objects.all()  # Assuming 'author' field in Blog model stores the user
+    return render(request, 'home.html', {'blogs': blogs, 'username': username})
 
 
 def signin(request):
@@ -25,8 +35,8 @@ def signin(request):
 
 from django.contrib import messages
 
-
 import re
+
 
 def signup_view(request):
     if request.method == 'POST':
@@ -52,7 +62,8 @@ def signup_view(request):
 
         # Validate password format
         if not re.match(password_regex, password):
-            messages.error(request, "Password should be at least 8 characters long and contain letters, numbers, and special characters")
+            messages.error(request,
+                           "Password should be at least 8 characters long and contain letters, numbers, and special characters")
             return redirect('/#signup')
 
         try:
@@ -90,30 +101,82 @@ def signup_view(request):
         return render(request, 'signup.html')
 
 
-
+from uuid import uuid4
+from .models import UserUniqueIdentifier  # Import the model you created
 
 def signin_view(request):
     if request.method == 'POST':
-        in_username = request.POST.get('signin-username')
-        in_password = request.POST.get('signin-password')
+        username = request.POST.get('signin-username')
+        password = request.POST.get('signin-password')
 
-        # Check if the username and password pair exists in the database
-        user_exists = UserProfile.objects.filter(username=in_username, password=in_password).exists()
+        # Custom authentication logic to authenticate the user
+        user = authenticate_user(username, password)
 
-        if user_exists:
-            # Create a session for the user
-            user = UserProfile.objects.get(username=in_username)
-            request.session['user_id'] = user.id
+        if user is not None:
+            # Generate a unique identifier for the user
+            user_unique_identifier = str(uuid4())
 
-            # Optionally, you can set other session data if needed
-            request.session['username'] = user.username
+            # Store the unique identifier in the user's session
+            request.session['user_unique_identifier'] = user_unique_identifier
 
-            # Redirect to a success page or any other page
-            return redirect('/home')  # Replace 'home' with your desired URL name
+            # Store the username and unique identifier in the database
+            user_identifier_obj, created = UserUniqueIdentifier.objects.get_or_create(
+                username=username,
+                defaults={'unique_identifier': user_unique_identifier}
+            )
+
+            # Redirect to the home page with the unique identifier in the URL
+            return redirect(f'/home/{username}')
         else:
             # Authentication failed
             error_message = "Invalid username or password"
             return render(request, 'signin.html', {'error_message': error_message})
     else:
-        # Handle GET request if needed
         return render(request, 'signin.html')
+
+
+def profile(request, username):
+    user_blogs = Blog.objects.filter(username=username)
+    return render(request, 'Profile.html', {'blogs': user_blogs, 'username': username})
+
+
+from django.shortcuts import render
+
+
+def new(request, username):
+    if request.method == 'POST':
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            blog = form.save(commit=False)
+            blog.user = request.user
+            blog.save()
+            return redirect('home', username=username)
+    else:
+        form = BlogForm()
+
+    # Pass the username to the template context
+    context = {'form': form, 'username': username}
+    return render(request, 'NewPost.html', context)
+
+
+
+def authenticate_user(username, password):
+    try:
+        # Retrieve the user from the database based on the provided username
+        user = UserProfile.objects.get(username=username)
+
+        # Check if the provided password matches the user's password
+        if user.password == password:
+            return user
+        else:
+            return None  # Password doesn't match
+    except UserProfile.DoesNotExist:
+        return None  # User with the provided username doesn't exist
+
+def delete_post(request, blog_id):
+    if request.method == 'POST':
+        blog = get_object_or_404(Blog, pk=blog_id)
+        blog.delete()
+        return JsonResponse({'message': 'Blog post deleted successfully.'})
+    else:
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
