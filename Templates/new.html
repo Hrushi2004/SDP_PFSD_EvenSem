@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #000, #333);
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            box-sizing: border-box;
+        }
+
+        h1, h2 {
+            color: #006400;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: transparent; /* Set background color to transparent */
+            color: #006400;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            background-color: #006400;
+            color: #fff;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #uploadedImage {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border: 1px solid #006400;
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+        function applyStyle(style, value = null) {
+            document.execCommand(style, false, value);
+        }
+
+        function handleImageUpload() {
+            var input = document.getElementById('imageInput');
+            var uploadedImage = document.getElementById('uploadedImage');
+
+            var file = input.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                uploadedImage.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h1>Create a Blog</h1>
+
+    <label for="blogTitle">Title:</label>
+    <input type="text" id="blogTitle" placeholder="Enter your blog title" style="width:100%; padding: 10px; margin-bottom: 10px; font-size: 16px; box-sizing: border-box;">
+
+    <div id="blogContent" contenteditable="true" style="border: 1px solid #006400; padding: 10px; font-size: 16px; box-sizing: border-box;"></div>
+
+    <div>
+        <button onclick="applyStyle('bold')"><i class="fas fa-bold"></i></button>
+        <button onclick="applyStyle('italic')"><i class="fas fa-italic"></i></button>
+        <button onclick="applyStyle('underline')"><i class="fas fa-underline"></i></button>
+        <button onclick="applyStyle('hiliteColor', '#ffff00')"><i class="fas fa-highlighter"></i></button>
+        <button onclick="applyStyle('formatBlock', 'h1')"><i class="fas fa-heading"></i> 1</button>
+        <button onclick="applyStyle('formatBlock', 'h2')"><i class="fas fa-heading"></i> 2</button>
+    </div>
+
+    <input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload()">
+    <label for="imageInput"><i class="fas fa-upload"></i> Upload Image</label>
+
+    <img id="uploadedImage" alt="Uploaded Image">
+
+</div>
+
+</body>
+</html>

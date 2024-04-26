@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscribe Form</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" integrity="sha384-i1LQnF23gykqWXg6jxC2ZbCbUMxyw5gLZY6UiUS98LYV5unm8GWmfkIS6jqJfb4E" crossorigin="anonymous">
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap');
+
+
+
+    html {
+      font-size: 20px;
+      font-family: 'Roboto';
+    }
+
+    body {
+      background-color: #006400; /* Dark green background */
+      color: #fff; /* White text color */
+    }
+
+    .wrapper {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .fas.fa-envelope {
+      color: #333;
+      font-size: 2rem;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 100%;
+      margin: 0 0 1rem 0;
+    }
+
+    .card-contentt {
+      max-width: 40rem;
+      background-color: #000; /* Black background */
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); /* White box shadow */
+      text-align: center;
+    }
+
+    .card-contentt h1 {
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .card-contentt p {
+      margin-bottom: 2rem;
+    }
+
+    input {
+      padding: .8rem 1rem;
+      width: 60%;
+      border-radius: 5rem;
+      outline: none;
+      border: .1rem solid #fff; /* White border */
+      font-size: .7rem;
+      margin-bottom: 1rem; /* Added margin bottom */
+    }
+
+    ::placeholder {
+      color: #333;
+    }
+
+    .subscribe-btn {
+      padding: .5rem 1.5rem; /* Reduced padding */
+      border-radius: 5rem;
+      background: linear-gradient(90deg, #00ff00, #006400); /* Green gradient */
+      color: #fff;
+      font-size: .7rem;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .subscribe-btn:hover {
+      background: linear-gradient(90deg, #006400, #00ff00); /* Reverse gradient on hover */
+    }
+
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .social-button {
+      background-color: #000; /* Black background */
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .social-button:hover {
+      background-color: #555; /* Darker background on hover */
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  <form action="#" class="card-contentt" id="subscribe-form">
+    <div class="containerr">
+      <div class="image">
+        <i class="fas fa-envelope"></i>
+      </div>
+      <h1>Subscribe</h1>
+      <p>Subscribe to our newsletter and stay updated.</p>
+    </div>
+    <div class="form-input">
+      <input type="email" id="email" placeholder="Your Email">
+    </div>
+    <button type="submit" class="subscribe-btn">Subscribe</button> <!-- Moved outside form-input -->
+    <div class="social-buttons">
+      <a href="https://www.facebook.com" target="_blank" class="social-button"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com" target="_blank" class="social-button"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.twitter.com" target="_blank" class="social-button"><i class="fab fa-twitter"></i></a>
+    </div>
+  </form>
+</div>
+<script>
+  document.getElementById("subscribe-form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Get the email input value
+    var email = document.getElementById("email").value;
+
+    // Display notification
+    alert("You are subscribed to our newsletter. Thank you for subscribing!");
+  });
+</script>
+</body>
+</html>
