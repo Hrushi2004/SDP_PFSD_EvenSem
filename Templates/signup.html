@@ -25,24 +25,25 @@ function redirectToSignIn() {
 
     <div class="signup-form" id="register">
 
-          {% if messages %}
+
+         <form method="post" action="{% url 'signup_view' %}">
+             {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Username should be mix of Letters and numbers" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="example@gmail.com" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Password minimum 8 character" required>
+
+             {% if messages %}
         <ul>
             {% for message in messages %}
                 <li>{{ message }}</li>
             {% endfor %}
         </ul>
     {% endif %}
-         <form method="post" action="{% url 'signup_view' %}">
-             {% csrf_token %}
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-
             <button type="submit">Submit</button>
         </form>
     </div>

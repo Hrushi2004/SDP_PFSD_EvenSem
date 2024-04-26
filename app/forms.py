@@ -1,5 +1,6 @@
 from django import forms
 from .models import UserProfile, UserData, Blog
+from django_recaptcha.fields import ReCaptchaField
 
 
 class UserForm(forms.ModelForm):
@@ -17,4 +18,4 @@ class UserDataForm(forms.ModelForm):
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ['username', 'title', 'content']
+        fields = ['username', 'title', 'content', 'category']

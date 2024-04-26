@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+import requests
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import UserProfile, Blog
@@ -106,30 +107,52 @@ from .models import UserUniqueIdentifier  # Import the model you created
 
 def signin_view(request):
     if request.method == 'POST':
-        username = request.POST.get('signin-username')
-        password = request.POST.get('signin-password')
+        # Check if reCAPTCHA response exists
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        if not recaptcha_response:
+            error_message = "reCAPTCHA verification is required."
+            return render(request, 'signin.html', {'error_message': error_message})
 
-        # Custom authentication logic to authenticate the user
-        user = authenticate_user(username, password)
+        # Verify the reCAPTCHA response
+        secret_key = '6Lew2McpAAAAAKBV0xxxSGA7-AXeomUIq_q8x4Oe'  # Replace with your actual reCAPTCHA secret key
+        payload = {
+            'secret': secret_key,
+            'response': recaptcha_response
+        }
+        response = requests.post('https://www.google.com/recaptcha/api/siteverify', data=payload)
+        result = response.json()
 
-        if user is not None:
-            # Generate a unique identifier for the user
-            user_unique_identifier = str(uuid4())
+        if result['success']:
+            # ReCAPTCHA verification successful, continue with authentication
+            username = request.POST.get('signin-username')
+            password = request.POST.get('signin-password')
 
-            # Store the unique identifier in the user's session
-            request.session['user_unique_identifier'] = user_unique_identifier
+            # Custom authentication logic to authenticate the user
+            user = authenticate_user(username, password)
 
-            # Store the username and unique identifier in the database
-            user_identifier_obj, created = UserUniqueIdentifier.objects.get_or_create(
-                username=username,
-                defaults={'unique_identifier': user_unique_identifier}
-            )
+            if user is not None:
+                # Generate a unique identifier for the user
+                user_unique_identifier = str(uuid4())
 
-            # Redirect to the home page with the unique identifier in the URL
-            return redirect(f'/home/{username}')
+                # Store the unique identifier in the user's session
+                request.session['user_unique_identifier'] = user_unique_identifier
+
+
+                # Store the username and unique identifier in the database
+                user_identifier_obj, created = UserUniqueIdentifier.objects.get_or_create(
+                    username=username,
+                    defaults={'unique_identifier': user_unique_identifier}
+                )
+
+                # Redirect to the home page with the unique identifier in the URL
+                return redirect(f'/home/{username}')
+            else:
+                # Authentication failed
+                error_message = "Invalid username or password"
+                return render(request, 'signin.html', {'error_message': error_message})
         else:
-            # Authentication failed
-            error_message = "Invalid username or password"
+            # ReCAPTCHA verification failed
+            error_message = "reCAPTCHA verification failed. Please try again."
             return render(request, 'signin.html', {'error_message': error_message})
     else:
         return render(request, 'signin.html')
@@ -154,8 +177,9 @@ def new(request, username):
     else:
         form = BlogForm()
 
-    # Pass the username to the template context
-    context = {'form': form, 'username': username}
+    categories = ['Movies','Technology', 'Travel', 'Food', 'Fashion', 'Lifestyle', 'Medical']
+    # Pass the categories to the template context with the correct variable name
+    context = {'form': form, 'username': username, 'categories': categories}
     return render(request, 'NewPost.html', context)
 
 

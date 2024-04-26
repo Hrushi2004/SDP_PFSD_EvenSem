@@ -6,6 +6,10 @@
 
 {% block content %}
 <script>
+    // Initialization for ES Users
+import { Input, initMDB } from "mdb-ui-kit";
+
+initMDB({ Input });
     document.addEventListener('DOMContentLoaded', function () {
         const signupBtn = document.getElementById('signup-btn');
         const signinBtn = document.getElementById('signin-btn');
@@ -52,6 +56,7 @@
 });
 
 </script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <style>
 /* Add this to your existing styles */
 #down-arrow-container {
@@ -273,13 +278,40 @@ button:active {
         0 0 2.5em 2em var(--glow-spread-color),
         inset 0 0 .5em .25em var(--glow-color);
 }
+footer {
+    border-top: 1px solid #e9ecef;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.logo-title img {
+    margin-right: 10px;
+}
+
+.social-icons {
+    list-style-type: none;
+    padding: 0;
+}
+
+.social-icons li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.social-icons li:last-child {
+    margin-right: 0;
+}
 
 </style>
+
 <div class="container" id="main">
 
     <div class="logo-container">
         <img src="{% static 'Logo/Logo.jpg' %}" alt="Logo" class="logo">
-        <h1>Blog</h1>
+        <h1>Bloggg</h1>
         <div class="Buttons">
 
             <button onclick="window.location.href='/signin'">
@@ -288,31 +320,33 @@ button:active {
              <button onclick="window.location.href='#about-us'">
                   <span>About Us</span>
              </button>
-             <button onclick="window.location.href='#team'">
-                  <span>Our team</span>
+             <button onclick="window.location.href='#subscribe'">
+                  <span>Subscribe</span>
             </button>
         </div>
 
     </div>
 
-    <h1 style="font-size: 4em;">Welcome to Blog</h1>
+    <h1 style="font-size: 4em;">Welcome to Bloggg</h1>
    <p> Explore, Engage and be Inspired – Where Stories Come to Life!</p>
 <div id="down-arrow-container">
     <i id="down-arrow" class="fas fa-arrow-down"></i>
-    <p id="swipe-text">Swipe up to learn more</p>
+    <p id="swipe-text">Scroll down to Register</p>
 </div>
 
 </div>
 
-<div class="container about-us" id="about-us">
-   {% include 'aboutus.html' %}
-</div>
+
 
 <div class="container signup" id="signup">
     {% include 'signup.html' %}
 </div>
 
-<div class="container team" id="team">
+<div class="container about-us" id="about-us">
    {% include 'ourteam.html' %}
+</div>
+
+<div class="container team" id="subscribe">
+    {% include 'Footer.html' %}
 </div>
 {% endblock %}

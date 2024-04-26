@@ -1,65 +1,193 @@
 {% extends 'BaseHome.html' %}
 {% block content %}
 <style>
+    .newpost {
+        text-align: center;
+    }
+
+    .newpost h1 {
+        font-size: 2.5rem; /* Increased heading size */
+        margin-bottom: 20px; /* Added space below the heading */
+    }
+
     .newpost form label {
-    display: block; /* Display labels as blocks */
-    margin-bottom: 10px; /* Add some space between labels */
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold; /* Added bold font weight to labels */
+        font-size: 1.1rem; /* Increased font size of labels */
+    }
+
+
+select option
+{
+
+  color: #000;
+
+}
+.newpost form select{
+     width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        border: 1px solid transparent; /* Set initial border color to transparent */
+        border-radius: 4px;
+        transition: border-color 0.3s; /* Add transition effect */
+         background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+}
+.newpost form
+{
+
+        width: 250%;
+        padding: 15px;
+        margin-bottom: 10px;
+        margin-left: -150px;
+        box-sizing: border-box;
+        border: 1px solid transparent; /* Set initial border color to transparent */
+        border-radius: 4px;
+        font-size: 1rem; /* Adjusted font size */
+        transition: border-color 0.3s; /* Add transition effect */
+         background-color: rgba(255, 255, 255, 0.1); /* Set slightly transparent background color */
+        color: #fff; /* Set text color to white */
+
 }
 
-.newpost form input,
-.newpost form textarea {
-    width: 100%; /* Make inputs and textareas full width */
-    padding: 10px; /* Add padding for better visual */
-    margin-bottom: 20px; /* Add some space between inputs */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-}
+    .newpost form input,
+    .newpost form textarea
+     {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        border: 1px solid transparent; /* Set initial border color to transparent */
+        border-radius: 4px;
+        font-size: 1rem; /* Adjusted font size */
+        transition: border-color 0.3s; /* Add transition effect */
+         background-color: rgba(255, 255, 255, 0.1); /* Set slightly transparent background color */
+        color: #fff; /* Set text color to white */
+    }
 
-.newpost form button {
-    padding: 10px 20px; /* Add padding to the button */
-    background-color: #007bff; /* Example button color */
-    color: white; /* Button text color */
-    border: none; /* Remove button border */
-    border-radius: 5px; /* Add some border radius for better visual */
-    cursor: pointer; /* Change cursor to pointer on hover */
-}
 
-.newpost form button:hover {
-    background-color: #0056b3; /* Darker button color on hover */
-}
 
+    .newpost form button {
+        padding: 12px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem; /* Adjusted font size */
+    }
+
+    button {
+        --glow-color: white;
+        --enhanced-glow-color: white;
+        --btn-color: black;
+        border: .25em solid var(--glow-color);
+        padding: 1em 1em;
+        color: var(--glow-color);
+        font-size: 15px;
+        font-weight: bold;
+        background-color: var(--btn-color);
+        border-radius: 1em;
+        outline: none;
+        box-shadow: 0 0 1em .25em var(--glow-color),
+                    0 0 4em 1em var(--glow-spread-color),
+                    inset 0 0 .75em .25em var(--glow-color);
+        text-shadow: 0 0 .5em var(--glow-color);
+        position: relative;
+        transition: all 0.3s;
+        margin-left: 25px;
+    }
+
+    button::after {
+        pointer-events: none;
+        content: "";
+        position: absolute;
+        top: 120%;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: var(--glow-spread-color);
+        filter: blur(2em);
+        opacity: .7;
+        transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
+    }
+
+    button:hover {
+        color: var(--btn-color);
+        background-color: var(--glow-color);
+        box-shadow: 0 0 1em .25em var(--glow-color),
+                    0 0 4em 2em var(--glow-spread-color),
+                    inset 0 0 .75em .25em var(--glow-color);
+    }
+
+    button:active {
+        box-shadow: 0 0 0.6em .25em var(--glow-color),
+                    0 0 2.5em 2em var(--glow-spread-color),
+                    inset 0 0 .5em .25em var(--glow-color);
+    }
 </style>
- <div class="icons-container">
-           <a href="/home/{{username}}" class="navButton" data-text="Home">
-    <i class="fas fa-home"></i>
-</a>
-            <a href="#" class="navButton" data-text="Popular This Week">
-                <i class="fas fa-fire"></i>
-            </a>
-              <a href="#" class="navButton" data-text="Favorite">
-                <i class="fas fa-bookmark"></i>
-            </a>
-            <a href="/profile/{{username}}" class="navButton" data-text="Profile">
-                <i class="fas fa-user"></i>
-            </a>
-            <a href="#" class="navButton" data-text="Settings">
-                <i class="fas fa-cogs"></i>
-            </a>
 
- </div>
+<div class="icons-container">
+    <a href="/home/{{username}}" class="navButton" data-text="Home">
+        <i class="fas fa-home"></i>
+    </a>
+    <a href="#" class="navButton" data-text="Popular This Week">
+        <i class="fas fa-fire"></i>
+    </a>
+    <a href="#" class="navButton" data-text="Favorite">
+        <i class="fas fa-bookmark"></i>
+    </a>
+    <a href="/profile/{{username}}" class="navButton" data-text="Profile">
+        <i class="fas fa-user"></i>
+    </a>
+    <a href="#" class="navButton" data-text="Settings">
+        <i class="fas fa-cogs"></i>
+    </a>
+</div>
 
 <div class="newpost">
     <h1>Create Blog</h1>
- <form method="post" action="{% url 'new' username=username %}">
-    {% csrf_token %}
-    <input type="hidden" name="username" value="{{ username }}">  <!-- Hidden input field for the username -->
+    <form method="post" action="{% url 'new' username=username %}">
+        {% csrf_token %}
+        <input type="hidden" name="username" value="{{ username }}">  <!-- Hidden input field for the username -->
 
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required>
+        <label for="category">Category:</label>
+        <select  id="category" name="category" required>
+            <option value="">Select a category</option>
+            {% for category in categories %}
+                <option value="{{ category }}">{{ category }}</option>
+            {% endfor %}
+        </select>
 
-    <label for="content">Content:</label>
-    <textarea id="content" name="content" required></textarea>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
 
-    <button type="submit">Save</button>
-</form>
+        <label for="content">Content:</label>
+        <textarea id="content" name="content" required></textarea>
+
+
+        <button type="submit" style="--glow-color: white;
+        --enhanced-glow-color: white;
+        --btn-color: black;
+        border: .25em solid var(--glow-color);
+        padding: 1em 1em;
+        color: var(--glow-color);
+        font-size: 15px;
+        font-weight: bold;
+        background-color: var(--btn-color);
+        border-radius: 1em;
+        outline: none;
+        box-shadow: 0 0 1em .25em var(--glow-color),
+                    0 0 4em 1em var(--glow-spread-color),
+                    inset 0 0 .75em .25em var(--glow-color);
+        text-shadow: 0 0 .5em var(--glow-color);
+        position: relative;
+        transition: all 0.3s;
+        ">
+        Save
+        </button>
+    </form>
 </div>
 {% endblock %}

@@ -6,6 +6,32 @@
 
 {% block content %}
 <script>
+    function readAloud(blogId) {
+    var blogContentElement = document.getElementById("blog-content-" + blogId);
+
+    if (!blogContentElement) {
+        console.error("Blog content element not found for ID:", blogId);
+        return;
+    }
+
+    var blogContent = blogContentElement.innerText;
+
+    if (!blogContent) {
+        console.warn("No content found for blog ID:", blogId);
+        return;
+    }
+
+    console.log("Content for blog ID", blogId + ":", blogContent);
+    if ('speechSynthesis' in window) {
+        var speech = new SpeechSynthesisUtterance();
+        speech.text = blogContent;
+        window.speechSynthesis.speak(speech);
+}else{
+    alert("Sorry, your browser doesn't support speech synthesis.");
+}
+}
+</script>
+    <script>
     function toggleOptionsMenu(event) {
         var optionsMenu = document.getElementById("optionsMenu");
         if (optionsMenu.style.display === "block") {
@@ -65,8 +91,31 @@
         // Navigate to the new page
         window.location.href = url;
     }
+    function filterByCategory() {
+    var categorySelect = document.getElementById("category-select");
+    var selectedCategory = categorySelect.value.toLowerCase();
+
+    var blogContainers = document.querySelectorAll(".blog-container");
+    blogContainers.forEach(function(container) {
+        var category = container.dataset.category.toLowerCase();
+
+        if (selectedCategory === "all" || category === selectedCategory) {
+            container.style.display = "block";
+        } else {
+            container.style.display = "none";
+        }
+    });
+}
+
 </script>
+
 <style>
+    select option
+{
+
+  color: #000;
+
+}
     .header{
     position: fixed;
     left: 250px;
@@ -92,12 +141,38 @@
             </a>
 
         </div>
-<div class="header">
-    <h1>Welcome</h1>
+
+<!-- Add this HTML snippet above the blog posts -->
+<!-- Move the category filter HTML snippet to the right side -->
+<div class="category-filter" style="position: fixed; right: 20px; top: 130px;">
+    <label for="category-select">Filter by Category:
+    </label>
+
+    <select id="category-select" onchange="filterByCategory()" style=" width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+         border: 1px solid transparent;
+        border-radius: 4px;
+        transition: border-color 0.3s; /* Add transition effect */
+         background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;">
+        <option value="all">All Categories</option>
+        <option value="Movies">Movies</option>
+        <option value="Technology">Technology</option>
+        <option value="Travel">Travel</option>
+        <option value="Food">Food</option>
+        <option value="Fashion">Fashion</option>
+        <option value="Lifestyle">Lifestyle</option>
+        <option value="Medical">Medical</option>
+    </select>
 </div>
+
+
 <div id="blog-posts" class="scroll-container">
     {% for blog in blogs %}
-    <div class="blog-container">
+
+    <div class="blog-container" data-category="{{ blog.category }}">
         <div class="blog-post">
             <div class="blog-header">
                 <div class="blog-meta">
@@ -112,14 +187,16 @@
                 <h1 class="blog-title">{{ blog.title }}</h1>
             </div>
             <div class="blog-content">
-                <p>{{ blog.content }}</p>
+                <p id="blog-content-{{ blog.id }}">{{ blog.content }}</p>
             </div>
+            <i class="fas fa-volume-up speaker-icon" onclick="readAloud('{{ blog.id }}')"></i>
             <div class="blog-feedback">
                 <i class="far fa-thumbs-up like-btn btn-space" onclick="toggleButtonColor(this)"></i>
                 <i class="far fa-thumbs-down dislike-btn" onclick="toggleButtonColor(this)"></i>
             </div>
         </div>
     </div>
+
     {% endfor %}
 </div>
 
